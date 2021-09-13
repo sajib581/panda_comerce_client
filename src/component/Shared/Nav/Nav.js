@@ -67,6 +67,17 @@ const Nav = () => (
                             Admin
                         </NavLink>
                     </li>
+                    <li className="nav-item  ml-4">
+                        <NavLink
+                            activeStyle={{
+                                borderTop: '1px solid red',
+                            }}
+                            className="nav-link"
+                            to="/login"
+                        >
+                            Login
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         </nav>
