@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Admin from './component/Admin/Admin';
@@ -6,11 +6,17 @@ import Contact from './component/Contact/Contact';
 import Home from './component/Home/Home/Home';
 import LoginScreen from './component/Login/LoginScreen';
 import RegisterScreen from './component/Login/RegisterScreen';
+import PrivateRoute from './component/privateRoute/PrivateRoute';
 import Shop from './component/Shop/Shop';
 
+export const AdminContext = createContext();
+
 function App() {
+    const [admin, setAdmin]  = useState(null)
+    console.log(admin);
     return (
-        <Router>
+        <AdminContext.Provider value={[admin, setAdmin]}>
+            <Router>
             <div>
                 <Switch>
                     <Route exact path="/">
@@ -22,9 +28,9 @@ function App() {
                     <Route path="/contact">
                         <Contact />
                     </Route>
-                    <Route path="/admin">
+                    <PrivateRoute path="/admin">
                         <Admin  />
-                    </Route>
+                    </PrivateRoute>
                     <Route path="/login">
                         <LoginScreen  />
                     </Route>
@@ -37,6 +43,8 @@ function App() {
                 </Switch>
             </div>
         </Router>
+    
+        </AdminContext.Provider>
     );
 }
 

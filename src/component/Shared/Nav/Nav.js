@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AdminContext } from '../../../App';
 import './Nav.css';
-
-const Nav = () => (
-    <div className="px-4">
+  
+const Nav = () => {
+    const [admin, setAdmin] = useContext (AdminContext)
+    return (
+        <div className="px-4">
         <nav className="navbar navbar-expand-lg navbar-light ">
             <Link className="navbar-brand" to="/">
                 <img height="50" src="https://w7.pngwing.com/pngs/985/991/png-transparent-foodpanda-online-food-ordering-food-delivery-restaurant-others-miscellaneous-white-face.png" alt="" />
@@ -56,7 +59,8 @@ const Nav = () => (
                             Contacts
                         </NavLink>
                     </li>
-                    <li className="nav-item  ml-4">
+                    {
+                        admin && <li className="nav-item  ml-4">
                         <NavLink
                             activeStyle={{
                                 borderTop: '1px solid red',
@@ -67,6 +71,7 @@ const Nav = () => (
                             Admin
                         </NavLink>
                     </li>
+                    }
                     <li className="nav-item  ml-4">
                         <NavLink
                             activeStyle={{
@@ -82,6 +87,8 @@ const Nav = () => (
             </div>
         </nav>
     </div>
-);
+
+    )
+}
 
 export default Nav;

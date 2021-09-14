@@ -1,33 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AdminContext } from "../../App";
 import Nav from "../Shared/Nav/Nav";
 import login_svg from "./img/login.svg";
 import wave from "./img/wavev.png";
 import "./logincss.css";
 
 const LoginScreen = () => {
-  const notify = () => toast("Wow so easy!")
+  let history = useHistory();
+    let location = useLocation();
+
+    let { from } = location.state || { from: { pathname: "/" } };
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    fetch('http://localhost:3001/login', {
+
+  const [admin, setAdmin] = useContext(AdminContext)
+
+  const onSubmit = async (data) => {
+    fetch('http://localhost:5000/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
             .then(response => response.json())
             .then(data => {
-              console.log(data)
               if(!data.errors){
+                const  jwtToken = data.jsonWebToken
+                localStorage.setItem('jwtToken', jwtToken );
                 // Show Successs Toast
                 toast.success('Login Successfull! ', {
                   position: "top-right",
@@ -38,7 +46,15 @@ const LoginScreen = () => {
                   draggable: true,
                   progress: undefined,
                   });
-                  
+
+                  fetch("http://localhost:5000/user/isAdmin/" + jwtToken)
+                  .then(response => response.json())
+                  .then(data => {
+                    setAdmin(data)
+                    if (data === true) {
+                      history.replace(from);
+                    }
+                  } )
               }else{
                 //Show Failed Toast
                 toast.error('Failed to Login', {
@@ -49,8 +65,7 @@ const LoginScreen = () => {
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                  });
-                  
+                  });                  
               }
             })
   }
@@ -73,7 +88,7 @@ const LoginScreen = () => {
             {/* {error && <h4>{error}</h4>} */}
             <div className="input-div one">
               <div className="i">
-                <i class="fas fa-envelope"></i>
+                <i className="fas fa-envelope"></i>
               </div>
               <div className="div">
                 <input
