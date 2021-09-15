@@ -1,21 +1,29 @@
 import React, { createContext, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import Admin from './component/Admin/Admin';
 import Contact from './component/Contact/Contact';
 import Home from './component/Home/Home/Home';
 import LoginScreen from './component/Login/LoginScreen';
 import RegisterScreen from './component/Login/RegisterScreen';
-import PrivateRoute from './component/privateRoute/PrivateRoute';
+import AdminRoute from './component/privateRoute/AdminRoute';
 import Shop from './component/Shop/Shop';
 
-export const AdminContext = createContext();
+export const LoggedInContext = createContext();
 
 function App() {
-    const [admin, setAdmin]  = useState(null)
-    console.log(admin);
+    const [logedInUser, setlogedInUser]  = useState({
+        userId : "",
+        username : '',
+        mobile : "" ,
+        email : '',
+        role : '',
+        avatar : ""
+    })
+    
     return (
-        <AdminContext.Provider value={[admin, setAdmin]}>
+        <LoggedInContext.Provider value={[logedInUser, setlogedInUser]}>
             <Router>
             <div>
                 <Switch>
@@ -28,9 +36,9 @@ function App() {
                     <Route path="/contact">
                         <Contact />
                     </Route>
-                    <PrivateRoute path="/admin">
+                    <AdminRoute path="/admin">
                         <Admin  />
-                    </PrivateRoute>
+                    </AdminRoute>
                     <Route path="/login">
                         <LoginScreen  />
                     </Route>
@@ -42,9 +50,10 @@ function App() {
                     </Route>
                 </Switch>
             </div>
+            <ToastContainer />
         </Router>
     
-        </AdminContext.Provider>
+        </LoggedInContext.Provider>
     );
 }
 

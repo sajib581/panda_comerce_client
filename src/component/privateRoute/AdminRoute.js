@@ -2,17 +2,17 @@ import React, { useContext } from 'react';
 import {
     Redirect, Route
 } from "react-router-dom";
-import { AdminContext } from '../../App';
+import { LoggedInContext } from '../../App';
 
 
-const PrivateRoute = ({ children, ...rest }) => {
-    const [admin, setAdmin] = useContext (AdminContext)
+const AdminRoute = ({ children, ...rest }) => {
+    const [logedInUser, setlogedInUser] = useContext (LoggedInContext)
     
     return (
         <Route
             {...rest}
             render={({ location }) =>
-              admin  ? (
+            logedInUser.role === 'admin'  ? (
                     children
                 ) : (
                         <Redirect
@@ -27,4 +27,4 @@ const PrivateRoute = ({ children, ...rest }) => {
     );
 };
 
-export default PrivateRoute;
+export default AdminRoute;

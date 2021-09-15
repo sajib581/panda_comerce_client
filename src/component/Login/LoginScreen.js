@@ -3,9 +3,9 @@ import { Image } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AdminContext } from "../../App";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { LoggedInContext } from "../../App";
 import Nav from "../Shared/Nav/Nav";
 import login_svg from "./img/login.svg";
 import wave from "./img/wavev.png";
@@ -13,9 +13,14 @@ import "./logincss.css";
 
 const LoginScreen = () => {
   let history = useHistory();
-    let location = useLocation();
+  let location = useLocation();
 
-    let { from } = location.state || { from: { pathname: "/" } };
+  const [logedInUser, setlogedInUser] = useContext(LoggedInContext);
+  if (logedInUser.role === "admin" || logedInUser.role === "user") {
+    history.push("/");
+  }
+
+  let { from } = location.state || { from: { pathname: "/" } };
   const {
     register,
     handleSubmit,
@@ -23,52 +28,47 @@ const LoginScreen = () => {
     formState: { errors },
   } = useForm();
 
-  const [admin, setAdmin] = useContext(AdminContext)
-
   const onSubmit = async (data) => {
-    fetch('http://localhost:5000/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(data => {
-              if(!data.errors){
-                const  jwtToken = data.jsonWebToken
-                localStorage.setItem('jwtToken', jwtToken );
-                // Show Successs Toast
-                toast.success('Login Successfull! ', {
-                  position: "top-right",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  });
+    fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.errors) {
+          const jwtToken = data.jsonWebToken;
+          localStorage.setItem("jwtToken", jwtToken);
+          setlogedInUser(data.userData)
+          // Show Successs Toast
+          toast.success("Login Successfull! ", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
 
-                  fetch("http://localhost:5000/user/isAdmin/" + jwtToken)
-                  .then(response => response.json())
-                  .then(data => {
-                    setAdmin(data)
-                    if (data === true) {
-                      history.replace(from);
-                    }
-                  } )
-              }else{
-                //Show Failed Toast
-                toast.error('Failed to Login', {
-                  position: "top-right",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  });                  
-              }
-            })
-  }
+          if (["admin" , "user"].includes(data.userData.role) ) {
+            history.replace(from);
+          }         
+          
+        } else {
+          //Show Failed Toast
+          toast.error("Failed to Login", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+      });
+  };
 
   return (
     <div>
@@ -115,13 +115,14 @@ const LoginScreen = () => {
             </div>
 
             <input type="submit" className="btna" value="Login" />
-            <ToastContainer />
+            
             <Link className="createAcc" to="/register">
               Create your Account
             </Link>
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
