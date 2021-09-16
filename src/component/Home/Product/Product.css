@@ -1,0 +1,17 @@
+.product img {
+  width: 100%;
+  position: absolute;
+  /* left: 25%; */
+  top: 0;
+}
+
+.product {
+  box-shadow: 3px 0px 5px grey;
+  height: 400px;
+}
+
+.cartBtn {
+  position: absolute;
+  left: 25%;
+  bottom: 0;
+}
