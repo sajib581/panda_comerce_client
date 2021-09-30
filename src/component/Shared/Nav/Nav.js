@@ -1,9 +1,14 @@
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
-import { LoggedInContext } from "../../../App";
+import { LoggedInContext, ProductContext } from "../../../App";
+import Cart from '../../Cart/Cart';
 import "./Nav.css";
+
 const Nav = () => {
   let history = useHistory();
+  const [,,,, showCart, setShowCart] = useContext(ProductContext)
   const [logedInUser, setlogedInUser] = useContext(LoggedInContext);
   const jwtToken = localStorage.getItem("jwtToken");
   useEffect(() => {
@@ -74,6 +79,7 @@ const Nav = () => {
                 Shop
               </NavLink>
             </li>
+            
             <li className="nav-item  ml-4">
               <NavLink
                 activeStyle={{
@@ -98,6 +104,16 @@ const Nav = () => {
                 </NavLink>
               </li>
             )}
+            <li style={{display : ""}} className="nav-item ml-4 d-flex">
+              <div>
+              <div className="d-flex">
+              <h2 onClick={()=>setShowCart(!showCart)} style={{cursor:"pointer"}}className="mr-2"><FontAwesomeIcon  className="text-danger" icon={faShoppingCart} />(2)</h2> <div>
+              <span className="m-0 p-0">My Cart</span> <br /> <span className="m-0 p-0">BDT 100 tk</span>
+              </div>
+              </div>
+              <div>{showCart && <Cart ></Cart>}</div>
+              </div>              
+            </li>
             {["admin", "user"].includes(logedInUser.role) ? (
               <li onClick={logOutHandeler} className="nav-item  ml-4">
                 <NavLink
@@ -122,6 +138,7 @@ const Nav = () => {
                   LogIn
                 </NavLink>
               </li>
+
             )}
           </ul>
         </div>

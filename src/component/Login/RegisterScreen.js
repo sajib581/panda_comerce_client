@@ -2,14 +2,51 @@ import React from 'react';
 import { Image } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import avatarRegister from './img/avatarRegister.svg';
 import addUs from './img/new.svg';
 import wave from './img/wavev.png';
 
-const RegisterScreen = ({location, history}) => {
+const RegisterScreen = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  let history = useHistory ();
+
+  const onSubmit = data => {
+    fetch("http://localhost:5000/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.errors) {
+        history.push('/login')
+        // Show Successs Toast
+        toast.success("Signup Successfull! ", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });           
+      } else {
+        //Show Failed Toast
+        toast.error("Failed to Signup", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    })
+  }
 
     return (
         <div className="registerSc">
@@ -82,6 +119,7 @@ const RegisterScreen = ({location, history}) => {
             </form>
         </div>
     </div>
+    <ToastContainer />
         </div>
     )
 }

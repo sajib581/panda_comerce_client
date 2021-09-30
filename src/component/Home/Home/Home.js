@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { ProductContext } from '../../../App';
 import Nav from '../../Shared/Nav/Nav';
 import AllProducts from '../AllProducts/AllProducts';
 
 const Home = () => {
     const [products, setProducts] = useState([])
+    const [,,,, showCart, setShowCart] = useContext(ProductContext)
     useEffect(() => {
         fetch("http://localhost:5000/user/allProduct")
         .then(response => response.json())
@@ -12,9 +14,8 @@ const Home = () => {
         } )
     }, [])
 
-console.log(products);
     return (
-        <div>
+        <div  >
             <Nav />
             <AllProducts />
         </div>
