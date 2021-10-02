@@ -3,14 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { LoggedInContext, ProductContext } from "../../../App";
+import { discountCalculation } from '../../../utilities/commonFunction';
 import Cart from '../../Cart/Cart';
 import "./Nav.css";
 
 const Nav = () => {
   let history = useHistory();
-  const [,,,, showCart, setShowCart] = useContext(ProductContext)
+  const [,, cart, setCart, showCart, setShowCart] = useContext(ProductContext)
   const [logedInUser, setlogedInUser] = useContext(LoggedInContext);
   const jwtToken = localStorage.getItem("jwtToken");
+  // const totalCartNumber = cart.reduce()
+  const totalNumberCart = cart.reduce((total, product) => total + product.cartQuantity , 0)
+  const totalCartAmount = cart.reduce((total, product) => total + product.cartQuantity * discountCalculation(product.price, product.discount) , 0)
   useEffect(() => {
     fetch("http://localhost:5000/isLoggedIn/" + jwtToken)
       .then((response) => response.json())
@@ -107,11 +111,11 @@ const Nav = () => {
             <li style={{display : ""}} className="nav-item ml-4 d-flex">
               <div>
               <div className="d-flex">
-              <h2 onClick={()=>setShowCart(!showCart)} style={{cursor:"pointer"}}className="mr-2"><FontAwesomeIcon  className="text-danger" icon={faShoppingCart} />(2)</h2> <div>
-              <span className="m-0 p-0">My Cart</span> <br /> <span className="m-0 p-0">BDT 100 tk</span>
+              <h2 onClick={()=>setShowCart(!showCart)} style={{cursor:"pointer"}}className="mr-2"><FontAwesomeIcon  className="text-danger" icon={faShoppingCart} />({totalNumberCart})</h2> <div>
+              <span className="m-0 p-0">My Cart</span> <br /> <span className="m-0 p-0">BDT {Number(totalCartAmount).toLocaleString('en')} tk</span>
               </div>
               </div>
-              <div>{showCart && <Cart ></Cart>}</div>
+                <div >{showCart && <Cart ></Cart>}</div>
               </div>              
             </li>
             {["admin", "user"].includes(logedInUser.role) ? (
@@ -127,7 +131,7 @@ const Nav = () => {
                 </NavLink>
               </li>
             ) : (
-              <li className="nav-item  ml-4">
+              <li className="nav-item pr-4">
                 <NavLink
                   activeStyle={{
                     borderTop: "1px solid red",

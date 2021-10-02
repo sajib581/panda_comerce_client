@@ -5,22 +5,7 @@ import Product from "../Product/Product";
 
 const AllProducts = () => {
   const [products, setAllProducts, cart, setCart] = useContext (ProductContext)
-//   useEffect(() => {
-//     console.log("Hitted here");
-//     const savedCart = getDatabaseCart();
-//     const productKeys = Object.keys(savedCart)
-//     const counts = Object.values(savedCart)
-
-//     if (products.length > 0) {
-//         const cartProducts = productKeys.map(key => {
-//             const product = products.find(pd => pd._id === key)
-//             product.cartQuantity = savedCart[key]
-//             return product
-//         })
-//         setCart(cartProducts)
-//     }
-// }, [products])
-
+  
   const handelAddProduct = (product) => {
     const toBeAdded = product._id
     const sameProduct = cart.find(pd => pd._id === toBeAdded)

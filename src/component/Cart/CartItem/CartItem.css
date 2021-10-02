@@ -7,3 +7,33 @@
   height: 120px;
   border-bottom: 1px solid lightgray;
 }
+
+.update:hover {
+  background-color: rgb(226, 247, 229) !important;
+}
+
+.update {
+  cursor: pointer;
+  background-color: rgb(247, 238, 218);
+  font-weight: 600;
+}
+
+.cart-footer button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 85px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

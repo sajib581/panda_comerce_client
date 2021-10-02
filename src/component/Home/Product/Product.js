@@ -1,17 +1,14 @@
 import React, { useContext } from "react";
 import { useHistory } from 'react-router-dom';
 import { ProductContext } from "../../../App";
+import { discountCalculation } from "../../../utilities/commonFunction";
 import "./Product.css";
 
 const Product = ({ product, handelAddProduct }) => {
   const [products, setAllProducts, cart, setCart] = useContext (ProductContext)
   const history = useHistory()
 
-  const discountCalculation = (main_price , discount) => {
-    let result = main_price - main_price * (discount/100) ;
-    return result
-  }
-
+  
   return (
     <div className="col-md-3 my-3  text-center ">
       <div className="border  product pt-1">
