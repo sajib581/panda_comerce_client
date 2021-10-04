@@ -1,0 +1,34 @@
+.product-view {
+  height: 200px;
+  overflow: auto;
+}
+
+.balance-view {
+  height: 140px;
+}
+
+.summery-item {
+  height: 80px;
+}
+
+.sdw small,
+.pd-name h6 {
+  color: #d70f64;
+}
+
+.plusMinus {
+  font-weight: 100 !important;
+  border: 1px solid white;
+}
+.sdw:hover {
+  box-shadow: 1px 1px 5px grey !important;
+}
+
+.summery button {
+  background-color: #d70f64;
+  color: white;
+}
+
+.summery button:hover {
+  color: white;
+}

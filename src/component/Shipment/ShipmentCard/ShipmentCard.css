@@ -1,0 +1,20 @@
+.showName {
+  height: 80px;
+}
+
+.showProduct {
+  overflow: auto;
+  height: 200px;
+}
+
+.showTotal {
+  height: 150px;
+  margin-top: 20px;
+}
+
+tr {
+  border-bottom: 2px solid white;
+}
+
+.table thead > tr > th {
+}

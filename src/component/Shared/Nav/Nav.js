@@ -12,9 +12,10 @@ const Nav = () => {
   const [,, cart, setCart, showCart, setShowCart] = useContext(ProductContext)
   const [logedInUser, setlogedInUser] = useContext(LoggedInContext);
   const jwtToken = localStorage.getItem("jwtToken");
-  // const totalCartNumber = cart.reduce()
+ 
   const totalNumberCart = cart.reduce((total, product) => total + product.cartQuantity , 0)
   const totalCartAmount = cart.reduce((total, product) => total + product.cartQuantity * discountCalculation(product.price, product.discount) , 0)
+  const deliveryFee = totalCartAmount?  990 : 0 ;
   useEffect(() => {
     fetch("http://localhost:5000/isLoggedIn/" + jwtToken)
       .then((response) => response.json())
@@ -78,9 +79,9 @@ const Nav = () => {
                   borderTop: "1px solid red",
                 }}
                 className="nav-link"
-                to="/shop"
+                to="/review"
               >
-                Shop
+                Review
               </NavLink>
             </li>
             
@@ -112,7 +113,7 @@ const Nav = () => {
               <div>
               <div className="d-flex">
               <h2 onClick={()=>setShowCart(!showCart)} style={{cursor:"pointer"}}className="mr-2"><FontAwesomeIcon  className="text-danger" icon={faShoppingCart} />({totalNumberCart})</h2> <div>
-              <span className="m-0 p-0">My Cart</span> <br /> <span className="m-0 p-0">BDT {Number(totalCartAmount).toLocaleString('en')} tk</span>
+              <span className="m-0 p-0">My Cart</span> <br /> <span className="m-0 p-0">BDT {Number(totalCartAmount + deliveryFee).toLocaleString('en')} tk</span>
               </div>
               </div>
                 <div >{showCart && <Cart ></Cart>}</div>

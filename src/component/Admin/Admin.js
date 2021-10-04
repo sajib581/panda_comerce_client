@@ -213,7 +213,7 @@ const Admin = () => {
                   <label htmlFor="formFile" className="form-label">
                     Product Image
                   </label>
-                  <input onChange={fileChangeHandeller} className="form-control" type="file" id="formFile" />
+                  <input onChange={fileChangeHandeller} accept="image/*" className="form-control" type="file" id="formFile" />
                 </div>
                 <div className="form-group col-6">
                   <label>Seller Name</label>

@@ -1,31 +1,35 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
+import { useHistory } from "react-router";
 import { ProductContext } from "../../App";
-import { addToDatabaseCart, removeFromDatabaseCart } from "../../utilities/cartManager";
+import {
+  addToDatabaseCart,
+  removeFromDatabaseCart
+} from "../../utilities/cartManager";
 import { discountCalculation } from "../../utilities/commonFunction";
 import CartItem from "./CartItem/CartItem";
 
 const Cart = () => {
   const [, , cart, setCart, showCart, setShowCart] = useContext(ProductContext);
-  
+  const history = useHistory()
   const inputCartHandeler = (quantity, product) => {
-    const toBeAdded = product._id
-    const sameProduct = cart.find(pd => pd._id === toBeAdded)
+    const toBeAdded = product._id;
+    const sameProduct = cart.find((pd) => pd._id === toBeAdded);
     let count = 1;
     if (sameProduct) {
-      const updatedCart = cart.map(product => {
-          if(product._id === toBeAdded){
-            product.cartQuantity = quantity ;
-          }
-          return product
-        })
-        setCart(updatedCart)
-        count = product.cartQuantity
-        addToDatabaseCart (product._id, count)
+      const updatedCart = cart.map((product) => {
+        if (product._id === toBeAdded) {
+          product.cartQuantity = quantity;
+        }
+        return product;
+      });
+      setCart(updatedCart);
+      count = product.cartQuantity;
+      addToDatabaseCart(product._id, count);
     }
   };
-  
+
   const deleteHandeler = (id) => {
     removeFromDatabaseCart(id);
     const otherCartsItem = cart.filter((pd) => pd._id !== id);
@@ -60,12 +64,19 @@ const Cart = () => {
           <FontAwesomeIcon className="text-danger" icon={faTimes} />
         </h5>
       </div>
-      <div style={{ height: "360px", borderBottom: "2px solid lightGrey", overflow : "auto" }}>
+      <div
+        style={{
+          height: "360px",
+          borderBottom: "2px solid lightGrey",
+          overflow: "auto",
+        }}
+      >
         {cart.map((product) => (
           <CartItem
+            key={product._id}
             inputCartHandeler={inputCartHandeler}
             product={product}
-            deleteHandeler={deleteHandeler}            
+            deleteHandeler={deleteHandeler}
           ></CartItem>
         ))}
       </div>
@@ -80,8 +91,8 @@ const Cart = () => {
             BDT {Number(totalCartAmount).toLocaleString("en")}
           </span>
         </h6>
-        <button>Go To Checkout</button>
-        <p className="text-secondary text-center mt-2">View and Edit Cart</p>
+        <button onClick={()=> history.push('/shipment') }>Go To Checkout</button>
+        <p onClick={()=> history.push('/review') } style={{cursor:"pointer"}} className="text-secondary text-center mt-2">View and Edit Cart</p>
       </div>
     </div>
   );

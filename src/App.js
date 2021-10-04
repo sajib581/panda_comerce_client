@@ -9,7 +9,9 @@ import ProductDetails from "./component/Home/ProductDetails/ProductDetails";
 import LoginScreen from "./component/Login/LoginScreen";
 import RegisterScreen from "./component/Login/RegisterScreen";
 import AdminRoute from "./component/privateRoute/AdminRoute";
-import Shop from "./component/Shop/Shop";
+import UserRoute from "./component/privateRoute/UserRoute";
+import Review from "./component/Review/Review";
+import Shipment from "./component/Shipment/Shipment";
 import { getDatabaseCart } from "./utilities/cartManager";
 
 export const LoggedInContext = createContext();
@@ -35,7 +37,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("Hitted here");
     const savedCart = getDatabaseCart();
     const productKeys = Object.keys(savedCart)
     const counts = Object.values(savedCart)
@@ -58,9 +59,6 @@ function App() {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route path="/shop">
-                <Shop />
-              </Route>
               <Route path="/contact">
                 <Contact />
               </Route>
@@ -70,6 +68,12 @@ function App() {
               <Route path="/login">
                 <LoginScreen />
               </Route>
+              <UserRoute path="/shipment">
+                <Shipment />
+              </UserRoute>
+              <UserRoute path="/review">
+                <Review />
+              </UserRoute>
               <Route path="/product/:key">
                 <ProductDetails />
               </Route>
