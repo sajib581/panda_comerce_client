@@ -1,19 +1,29 @@
 .nav-link {
   color: black !important;
+  font-weight: 600;
 }
 
 NavLink {
   color: red;
-  font-weight: bold !important;
+  /* font-weight: 700; */
 }
 
 @media (max-width: 576px) {
   NavLink {
-    color: red !important;
+    color: red;
     font-weight: bold !important;
   }
 }
 
 .nav-link:hover {
   color: red !important;
+}
+
+.admin {
+  background-color: rgb(243, 56, 56);
+  color: white !important;
+}
+
+.admin:hover {
+  color: white !important;
 }

@@ -61,7 +61,7 @@ const Admin = () => {
         formData.append('productInfo', JSON.stringify(data))
 
         const jwtToken = localStorage.getItem('jwtToken');
-        fetch(`http://localhost:5000/admin/addProduct/${jwtToken}`, {
+        fetch(`https://panda-commerce.herokuapp.com/admin/addProduct/${jwtToken}`, {
             method: 'POST',
             body: formData
         })

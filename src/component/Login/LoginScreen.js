@@ -29,7 +29,7 @@ const LoginScreen = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    fetch("http://localhost:5000/login", {
+    fetch("https://panda-commerce.herokuapp.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

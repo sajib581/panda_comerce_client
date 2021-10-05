@@ -31,7 +31,7 @@ function App() {
   const [showCart, setShowCart] = useState(false) 
   const [cart, setCart] = useState([])
   useEffect(() => {
-    fetch("http://localhost:5000/user/allProduct")
+    fetch("https://panda-commerce.herokuapp.com/user/allProduct")
       .then((response) => response.json())
       .then((data) => setAllProducts(data.data));
   }, []);

@@ -7,7 +7,7 @@ const Home = () => {
     const [products, setProducts] = useState([])
     const [,,,, showCart, setShowCart] = useContext(ProductContext)
     useEffect(() => {
-        fetch("http://localhost:5000/user/allProduct")
+        fetch("https://panda-commerce.herokuapp.com/user/allProduct")
         .then(response => response.json())
         .then((result) =>{
             setProducts(result.data)

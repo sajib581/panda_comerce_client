@@ -17,7 +17,7 @@ const Nav = () => {
   const totalCartAmount = cart.reduce((total, product) => total + product.cartQuantity * discountCalculation(product.price, product.discount) , 0)
   const deliveryFee = totalCartAmount?  990 : 0 ;
   useEffect(() => {
-    fetch("http://localhost:5000/isLoggedIn/" + jwtToken)
+    fetch("https://panda-commerce.herokuapp.com/isLoggedIn/" + jwtToken)
       .then((response) => response.json())
       .then((data) => {
         if (!data.error) {
@@ -67,7 +67,7 @@ const Nav = () => {
                 activeStyle={{
                   borderTop: "1px solid red",
                 }}
-                className="nav-link"
+                className="nav-link "
                 to="/"
               >
                 Home
@@ -78,7 +78,7 @@ const Nav = () => {
                 activeStyle={{
                   borderTop: "1px solid red",
                 }}
-                className="nav-link"
+                className="nav-link "
                 to="/review"
               >
                 Review
@@ -90,19 +90,19 @@ const Nav = () => {
                 activeStyle={{
                   borderTop: "1px solid red",
                 }}
-                className="nav-link"
+                className="nav-link "
                 to="/contact"
               >
                 Contacts
               </NavLink>
             </li>
             {logedInUser.role === "admin" && (
-              <li className="nav-item  ml-4">
+              <li className="nav-item  ml-4 " >
                 <NavLink
                   activeStyle={{
                     borderTop: "1px solid red",
                   }}
-                  className="nav-link"
+                  className="nav-link admin rounded "
                   to="/admin"
                 >
                   Admin
@@ -113,7 +113,7 @@ const Nav = () => {
               <div>
               <div className="d-flex">
               <h2 onClick={()=>setShowCart(!showCart)} style={{cursor:"pointer"}}className="mr-2"><FontAwesomeIcon  className="text-danger" icon={faShoppingCart} />({totalNumberCart})</h2> <div>
-              <span className="m-0 p-0">My Cart</span> <br /> <span className="m-0 p-0">BDT {Number(totalCartAmount + deliveryFee).toLocaleString('en')} tk</span>
+              <span className="m-0 p-0 fw-bold" >My Cart</span> <br /> <span className="m-0 p-0 fw-bold">BDT {Number(totalCartAmount + deliveryFee).toLocaleString('en')} tk</span>
               </div>
               </div>
                 <div >{showCart && <Cart ></Cart>}</div>

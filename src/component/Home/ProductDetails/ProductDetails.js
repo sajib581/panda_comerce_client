@@ -1,10 +1,10 @@
 import {
-  faBox,
-  faExchangeAlt,
-  faHeadset,
-  faLock,
-  faMapMarkerAlt,
-  faThumbsUp
+    faBox,
+    faExchangeAlt,
+    faHeadset,
+    faLock,
+    faMapMarkerAlt,
+    faThumbsUp
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
@@ -23,7 +23,7 @@ const ProductDetails = () => {
   const { key } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:5000/user/getOneProduct/" + key)
+    fetch("https://panda-commerce.herokuapp.com/user/getOneProduct/" + key)
       .then((response) => response.json())
       .then((result) => {
         setProduct(result.data);

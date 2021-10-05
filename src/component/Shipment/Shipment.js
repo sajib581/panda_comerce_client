@@ -57,7 +57,7 @@ const Shipment = () => {
     data.orderedProducts = ordered_Products_sendTo_Server;
     const jwtToken = localStorage.getItem('jwtToken');
 
-    fetch(`http://localhost:5000/user/purchaseOrder/${jwtToken}`, {
+    fetch(`https://panda-commerce.herokuapp.com/user/purchaseOrder/${jwtToken}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
